@@ -1,0 +1,13 @@
+{
+  "version": "2.0.0",
+  "name": "Little Devil Preset Runtime",
+  "identifier": "little_devil_preset",
+  "author": "Little Devil Lumiverse Port",
+  "github": "",
+  "homepage": "https://docs.lumiverse.chat/",
+  "description": "Compatibility runtime for the full Little Devil preset: RisuAI expression/string macros plus D&D and CoC checks.",
+  "permissions": [
+    "tools"
+  ],
+  "entry_backend": "dist/backend.js"
+}
