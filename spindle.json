@@ -3,7 +3,7 @@
   "name": "Little Devil Preset Runtime",
   "identifier": "little_devil_preset",
   "author": "Little Devil Lumiverse Port",
-  "github": "",
+  "github": "https://github.com/japolino/little-devil-lumiverse-extension",
   "homepage": "https://docs.lumiverse.chat/",
   "description": "Compatibility runtime for the full Little Devil preset: RisuAI expression/string macros plus D&D and CoC checks.",
   "permissions": [
