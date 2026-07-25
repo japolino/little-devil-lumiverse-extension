@@ -2,7 +2,7 @@
 
 Companion Spindle extension for the Lumiverse port of the Little Devil v15-9B [Gem3.1] preset.
 
-This extension serves the whole preset. It registers:
+This extension serves the whole preset, including the first- and second-category port. It registers:
 
 - `littleDevilCalc`, a compatibility macro for RisuAI arithmetic, comparisons, boolean operators, negation, and nested parentheses.
 - `littleDevilContains`, preserving RisuAI's literal case-sensitive substring test.
@@ -21,6 +21,8 @@ The result includes every roll, the selected roll, modifiers, target, success, a
 
 Install this folder as a Lumiverse Spindle extension and grant the `tools` permission. Then import `little-devil-v15-9b-gem3.1-lumiverse.preset.json` and enable Function Calling in the active model profile if it is not already enabled.
 
-The extension is required for full parity because many first-category toggles use RisuAI's expression evaluator. Without it, Lumiverse leaves the compatibility macros unresolved. TTRPG mode also falls back to emitting a `<DICE>...</DICE>` tag when the extension is unavailable.
+The extension is required for full parity because many toggles use RisuAI's expression evaluator. Without it, Lumiverse leaves the compatibility macros unresolved. TTRPG mode also falls back to emitting a `<DICE>...</DICE>` tag when the extension is unavailable.
 
 The paired preset uses Lumiverse's native `unless` block plus the namespaced boolean macros instead of the bare native `if`, `and`, `or`, and `not` names. This keeps toggle branches intact when a `.charx` card is running through LumiRealm's global Risu macro interceptor.
+
+The second category reuses this runtime without adding permissions, macros, tools, or interceptors. BKSPC and the asset/image subsystem are intentionally not included.
