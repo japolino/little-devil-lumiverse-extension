@@ -6,6 +6,7 @@ This extension serves the whole preset. It registers:
 
 - `littleDevilCalc`, a compatibility macro for RisuAI arithmetic, comparisons, boolean operators, negation, and nested parentheses.
 - `littleDevilContains`, preserving RisuAI's literal case-sensitive substring test.
+- `littleDevilNot`, `littleDevilAnd`, and `littleDevilOr`, namespaced boolean macros that prevent LumiRealm's `.charx` compatibility interceptor from consuming the preset's control flow.
 - `littleDevilRuntime`, a health-check macro.
 - `roll_check`, the LLM tool used by the preset's two TTRPG modes.
 
@@ -21,3 +22,5 @@ The result includes every roll, the selected roll, modifiers, target, success, a
 Install this folder as a Lumiverse Spindle extension and grant the `tools` permission. Then import `little-devil-v15-9b-gem3.1-lumiverse.preset.json` and enable Function Calling in the active model profile if it is not already enabled.
 
 The extension is required for full parity because many first-category toggles use RisuAI's expression evaluator. Without it, Lumiverse leaves the compatibility macros unresolved. TTRPG mode also falls back to emitting a `<DICE>...</DICE>` tag when the extension is unavailable.
+
+The paired preset uses Lumiverse's native `unless` block plus the namespaced boolean macros instead of the bare native `if`, `and`, `or`, and `not` names. This keeps toggle branches intact when a `.charx` card is running through LumiRealm's global Risu macro interceptor.

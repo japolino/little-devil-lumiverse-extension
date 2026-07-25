@@ -14,6 +14,23 @@
     return "";
   }
 
+  function macroArgs(ctx) {
+    const args = ctx && ctx.args;
+    if (Array.isArray(args)) return args.map((value) => value == null ? "" : String(value));
+    if (args && typeof args === "object") {
+      const keys = Object.keys(args);
+      const numericKeys = keys.filter((key) => /^\d+$/.test(key)).sort((a, b) => Number(a) - Number(b));
+      const ordered = numericKeys.length ? numericKeys : keys;
+      return ordered.map((key) => args[key] == null ? "" : String(args[key]));
+    }
+    return [];
+  }
+
+  function isMacroTruthy(value) {
+    const normalized = String(value == null ? "" : value).trim().toLowerCase();
+    return normalized === "1" || normalized === "true";
+  }
+
   function toRPN(expression) {
     let outputQueue = "";
     const operatorStack = [];
@@ -254,6 +271,40 @@
     ],
     handler: function (ctx) {
       return macroArg(ctx, 0, "text").includes(macroArg(ctx, 1, "needle")) ? 1 : 0;
+    }
+  });
+
+  spindle.registerMacro({
+    name: "littleDevilNot",
+    category: MACRO_CATEGORY,
+    description: "Namespaced boolean negation used to avoid collisions with Risu compatibility interceptors.",
+    returnType: "integer",
+    args: [
+      { name: "value", required: true }
+    ],
+    handler: function (ctx) {
+      return isMacroTruthy(macroArg(ctx, 0, "value")) ? 0 : 1;
+    }
+  });
+
+  spindle.registerMacro({
+    name: "littleDevilAnd",
+    category: MACRO_CATEGORY,
+    description: "Namespaced variadic boolean AND used to avoid collisions with Risu compatibility interceptors.",
+    returnType: "integer",
+    handler: function (ctx) {
+      const values = macroArgs(ctx);
+      return values.length === 0 || values.every(isMacroTruthy) ? 1 : 0;
+    }
+  });
+
+  spindle.registerMacro({
+    name: "littleDevilOr",
+    category: MACRO_CATEGORY,
+    description: "Namespaced variadic boolean OR used to avoid collisions with Risu compatibility interceptors.",
+    returnType: "integer",
+    handler: function (ctx) {
+      return macroArgs(ctx).some(isMacroTruthy) ? 1 : 0;
     }
   });
 
