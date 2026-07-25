@@ -230,7 +230,7 @@
     name: "littleDevilCalc",
     category: MACRO_CATEGORY,
     description: "Evaluates a RisuAI-compatible arithmetic or boolean expression for the Little Devil preset.",
-    returnType: "string",
+    returnType: "number",
     args: [
       {
         name: "expression",
@@ -239,7 +239,7 @@
       }
     ],
     handler: function (ctx) {
-      return String(calcString(macroArg(ctx, 0, "expression")));
+      return calcString(macroArg(ctx, 0, "expression"));
     }
   });
 
@@ -247,13 +247,13 @@
     name: "littleDevilContains",
     category: MACRO_CATEGORY,
     description: "Performs RisuAI-compatible literal, case-sensitive substring matching.",
-    returnType: "string",
+    returnType: "integer",
     args: [
       { name: "text", required: true },
       { name: "needle", required: true }
     ],
     handler: function (ctx) {
-      return macroArg(ctx, 0, "text").includes(macroArg(ctx, 1, "needle")) ? "1" : "0";
+      return macroArg(ctx, 0, "text").includes(macroArg(ctx, 1, "needle")) ? 1 : 0;
     }
   });
 
