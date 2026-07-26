@@ -5,7 +5,7 @@
   "preset": {
     "id": "1e813f1a-a4d9-4bd7-9da7-14a381b14608",
     "name": "소악마 프롬프트 v15-9B [Gem3.1] — Lumiverse",
-    "presetVersion": "2.2.2",
+    "presetVersion": "2.2.3",
     "blocks": [
       {
         "id": "ea236095-81d6-41ff-a89d-7049310efed2",
@@ -2331,9 +2331,9 @@
     ],
     "source": "imported",
     "coverUrl": null,
-    "createdAt": "2026-07-26T18:52:50.288Z",
+    "createdAt": "2026-07-26T20:16:59.151Z",
     "isDefault": false,
-    "updatedAt": "2026-07-26T18:52:50.288Z",
+    "updatedAt": "2026-07-26T20:16:59.151Z",
     "customBody": "",
     "extensions": {
       "regex_scripts": [
@@ -2508,7 +2508,7 @@
           "description": "Imported from the first-category Little Devil preset behavior.",
           "run_on_edit": false,
           "trim_strings": [],
-          "replace_string": "{{unless::{{littleDevilNot::{{eq::{{littleDevilCalc::{{var::stat_s}}=1}}::1}}}}}}\n$&\n{{/unless}}",
+          "replace_string": "{{unless::!{{eq::{{var::stat_s}}::1}}}}$&{{/unless}}",
           "substitute_macros": "after"
         },
         {
@@ -2595,7 +2595,7 @@
           "description": "Imported from the first-category Little Devil preset behavior.",
           "run_on_edit": false,
           "trim_strings": [],
-          "replace_string": "{{unless::{{littleDevilNot::{{eq::{{littleDevilCalc::{{var::stat_npc}}=1}}::1}}}}}}\n$&\n{{/unless}}",
+          "replace_string": "{{unless::!{{eq::{{var::stat_npc}}::1}}}}$&{{/unless}}",
           "substitute_macros": "after"
         },
         {
@@ -2624,7 +2624,7 @@
           "description": "Imported from the first-category Little Devil preset behavior.",
           "run_on_edit": false,
           "trim_strings": [],
-          "replace_string": "{{unless::{{littleDevilNot::{{eq::{{littleDevilCalc::{{var::helena_tip}}=1}}::1}}}}}}$&{{/unless}}",
+          "replace_string": "{{unless::!{{eq::{{var::helena_tip}}::1}}}}$&{{/unless}}",
           "substitute_macros": "after"
         },
         {
@@ -2682,7 +2682,7 @@
           "description": "Imported from the first-category Little Devil preset behavior.",
           "run_on_edit": false,
           "trim_strings": [],
-          "replace_string": "{{unless::{{littleDevilNot::{{eq::{{littleDevilCalc::{{var::helena_tip}}=1}}::1}}}}}}$&{{/unless}}",
+          "replace_string": "{{unless::!{{eq::{{var::helena_tip}}::1}}}}$&{{/unless}}",
           "substitute_macros": "after"
         },
         {
@@ -2711,7 +2711,7 @@
           "description": "Imported from the first-category Little Devil preset behavior.",
           "run_on_edit": false,
           "trim_strings": [],
-          "replace_string": "{{unless::{{littleDevilNot::{{eq::{{littleDevilCalc::{{var::response_mode}}>1}}::1}}}}}}$&{{/unless}}",
+          "replace_string": "{{unless::!{{gt::{{var::response_mode}}::1}}}}$&{{/unless}}",
           "substitute_macros": "after"
         },
         {
@@ -3153,7 +3153,7 @@
     },
     "description": "First- and second-category port from RisuAI. Censorship controls, BKSPC, and asset-output controls are intentionally excluded. Includes native Lumiverse variables, prompt blocks, regex behavior, and hooks for the paired Little Devil preset runtime.",
     "lumihubMeta": null,
-    "cacheRevision": 5,
+    "cacheRevision": 6,
     "modelProfiles": [],
     "schemaVersion": 2,
     "lastProfileKey": null,
@@ -3483,7 +3483,7 @@
       "description": "Imported from the first-category Little Devil preset behavior.",
       "run_on_edit": false,
       "trim_strings": [],
-      "replace_string": "{{unless::{{littleDevilNot::{{eq::{{littleDevilCalc::{{var::stat_s}}=1}}::1}}}}}}\n$&\n{{/unless}}",
+      "replace_string": "{{unless::!{{eq::{{var::stat_s}}::1}}}}$&{{/unless}}",
       "substitute_macros": "after"
     },
     {
@@ -3570,7 +3570,7 @@
       "description": "Imported from the first-category Little Devil preset behavior.",
       "run_on_edit": false,
       "trim_strings": [],
-      "replace_string": "{{unless::{{littleDevilNot::{{eq::{{littleDevilCalc::{{var::stat_npc}}=1}}::1}}}}}}\n$&\n{{/unless}}",
+      "replace_string": "{{unless::!{{eq::{{var::stat_npc}}::1}}}}$&{{/unless}}",
       "substitute_macros": "after"
     },
     {
@@ -3599,7 +3599,7 @@
       "description": "Imported from the first-category Little Devil preset behavior.",
       "run_on_edit": false,
       "trim_strings": [],
-      "replace_string": "{{unless::{{littleDevilNot::{{eq::{{littleDevilCalc::{{var::helena_tip}}=1}}::1}}}}}}$&{{/unless}}",
+      "replace_string": "{{unless::!{{eq::{{var::helena_tip}}::1}}}}$&{{/unless}}",
       "substitute_macros": "after"
     },
     {
@@ -3657,7 +3657,7 @@
       "description": "Imported from the first-category Little Devil preset behavior.",
       "run_on_edit": false,
       "trim_strings": [],
-      "replace_string": "{{unless::{{littleDevilNot::{{eq::{{littleDevilCalc::{{var::helena_tip}}=1}}::1}}}}}}$&{{/unless}}",
+      "replace_string": "{{unless::!{{eq::{{var::helena_tip}}::1}}}}$&{{/unless}}",
       "substitute_macros": "after"
     },
     {
@@ -3686,7 +3686,7 @@
       "description": "Imported from the first-category Little Devil preset behavior.",
       "run_on_edit": false,
       "trim_strings": [],
-      "replace_string": "{{unless::{{littleDevilNot::{{eq::{{littleDevilCalc::{{var::response_mode}}>1}}::1}}}}}}$&{{/unless}}",
+      "replace_string": "{{unless::!{{gt::{{var::response_mode}}::1}}}}$&{{/unless}}",
       "substitute_macros": "after"
     },
     {
