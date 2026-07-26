@@ -26,3 +26,5 @@ The extension is required for full parity because many toggles use RisuAI's expr
 The paired preset uses Lumiverse's native `unless` block plus the namespaced boolean macros instead of the bare native `if`, `and`, `or`, and `not` names. This keeps toggle branches intact when a `.charx` card is running through LumiRealm's global Risu macro interceptor.
 
 The second category reuses this runtime without adding permissions, macros, tools, or interceptors. BKSPC and the asset/image subsystem are intentionally not included.
+
+Preset 2.2.2 consolidates the repeated Helena history detectors into one native-only scan, so long chat histories no longer trigger extension RPC calls per message.
