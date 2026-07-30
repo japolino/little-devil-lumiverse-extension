@@ -1,13 +1,14 @@
 {
-  "version": "2.1.0",
+  "version": "2.2.0",
   "name": "Little Devil Preset Runtime",
   "identifier": "little_devil_preset",
   "author": "Little Devil Lumiverse Port",
   "github": "https://github.com/japolino/little-devil-lumiverse-extension",
   "homepage": "https://docs.lumiverse.chat/",
-  "description": "Compatibility runtime for the full Little Devil preset: RisuAI expression/string macros plus D&D and CoC checks.",
+  "description": "Compatibility runtime for the Little Devil preset: collision-safe RisuAI macros plus clickable D&D and CoC checks.",
   "permissions": [
-    "tools"
+    "chat_mutation"
   ],
-  "entry_backend": "dist/backend.js"
+  "entry_backend": "dist/backend.js",
+  "entry_frontend": "dist/frontend.js"
 }

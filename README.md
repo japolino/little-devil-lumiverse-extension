@@ -6,25 +6,28 @@ This extension serves the whole preset, including the first- and second-category
 
 - `littleDevilCalc`, a compatibility macro for RisuAI arithmetic, comparisons, boolean operators, negation, and nested parentheses.
 - `littleDevilContains`, preserving RisuAI's literal case-sensitive substring test.
+- `littleDevilLength`, a collision-safe replacement for RisuAI's string-length macro.
 - `littleDevilNot`, `littleDevilAnd`, and `littleDevilOr`, namespaced boolean macros that prevent LumiRealm's `.charx` compatibility interceptor from consuming the preset's control flow.
 - `littleDevilRuntime`, a health-check macro.
-- `roll_check`, the LLM tool used by the preset's two TTRPG modes.
+- A frontend `<DICE>` tag widget and backend roll handler for the preset's two TTRPG modes.
 
 The TTRPG systems are:
 
 - `coc_low`: percentile roll-under. Advantage keeps the lower result; disadvantage keeps the higher.
 - `dnd_high`: d20 roll-over. Advantage keeps the higher natural result; disadvantage keeps the lower.
 
-The result includes every roll, the selected roll, modifiers, target, success, and critical/fumble information. CoC checks also return the success degree. Unopposed rolls such as damage are supported by omitting `target`; their `success` value is `null`.
+The assistant emits one `<DICE>notation:label:target[:LOW][:ADV|DIS]</DICE>` request and stops. The extension hides that tag, renders a clickable roll button in the assistant message, and appends the resolved check as the next user message. It does not automatically trigger another generation.
 
 ## Install
 
-Install this folder as a Lumiverse Spindle extension and grant the `tools` permission. Then import `little-devil-v15-9b-gem3.1-lumiverse.preset.json` and enable Function Calling in the active model profile if it is not already enabled.
+Install this folder as a Lumiverse Spindle extension and grant the `chat_mutation` permission. Then import `little-devil-v15-9b-gem3.1-lumiverse.preset.json`. Function Calling is not required.
 
-The extension is required for full parity because many toggles use RisuAI's expression evaluator. Without it, Lumiverse leaves the compatibility macros unresolved. TTRPG mode also falls back to emitting a `<DICE>...</DICE>` tag when the extension is unavailable.
+The extension is required for full parity because many toggles use RisuAI's expression evaluator. Without it, Lumiverse leaves the compatibility macros unresolved and cannot turn TTRPG requests into interactive rolls.
 
-The paired preset uses Lumiverse's native `unless` block plus the namespaced boolean macros instead of the bare native `if`, `and`, `or`, and `not` names. This keeps toggle branches intact when a `.charx` card is running through LumiRealm's global Risu macro interceptor.
+The paired preset uses Lumiverse's native `unless` block plus namespaced boolean and length macros instead of the bare `if`, `and`, `or`, `not`, and `length` names. This keeps toggle branches and blank custom fields intact when a `.charx` card is running through LumiRealm's global Risu macro interceptor.
 
-The second category reuses this runtime without adding permissions, macros, tools, or interceptors. BKSPC and the asset/image subsystem are intentionally not included.
+The custom Risu-style long-term-memory wrapper is intentionally omitted. Lumiverse handles long-term-memory retrieval and Memory Cortex injection itself; retaining the source wrapper would duplicate native recall and assume incompatible Risu memory fields.
 
-Preset 2.2.3 consolidates the repeated Helena history detectors and makes every regex replacement native-only, so long chat histories no longer trigger extension RPC calls per message or matched status block.
+BKSPC and the asset/image subsystem are intentionally not included.
+
+Preset 2.3.0 consolidates the repeated Helena history detectors, makes every regex replacement native-only, namespaces string-length checks, removes the redundant Risu memory wrapper, and restores the original clickable TTRPG flow.

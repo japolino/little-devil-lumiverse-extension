@@ -1,7 +1,8 @@
 (function () {
   "use strict";
 
-  const TOOL_NAME = "roll_check";
+  const ROLL_MESSAGE_TYPE = "little_devil_ttrpg_roll";
+  const ROLL_RESULT_TYPE = "little_devil_ttrpg_roll_result";
   const MACRO_CATEGORY = "extension:little_devil_preset";
 
   function macroArg(ctx, index, name) {
@@ -214,7 +215,6 @@
     const natural = notation.count === 1 ? attempts[selectedIndex].dice[0] : null;
 
     const result = {
-      tool: TOOL_NAME,
       label: String(input.label || "Check"),
       system,
       notation: notation.text,
@@ -234,13 +234,77 @@
       result.fumble = notation.count === 1 && notation.sides === 20 && natural === 1;
     } else if (hasTarget) {
       result.degree = cocDegree(total, target);
-      result.critical = result.degree === "critical";
-      result.fumble = result.degree === "fumble";
+      result.critical = notation.count === 1 && notation.sides === 100 && natural <= 5;
+      result.fumble = notation.count === 1 && notation.sides === 100 && natural >= 96;
     } else {
       result.critical = total === 1;
       result.fumble = false;
     }
     return result;
+  }
+
+  function parseDiceRequest(content) {
+    const source = String(content == null ? "" : content).trim();
+    if (!source || source.length > 512) throw new Error("Invalid or oversized dice request.");
+    const parts = source.split(":").map((part) => part.trim());
+    if (parts.length < 2) throw new Error("Dice request must include notation and a label.");
+
+    const notation = parts.shift();
+    const label = String(parts.shift() || "Check").slice(0, 120);
+    let target = null;
+    let system = "dnd_high";
+    let rollMode = "normal";
+
+    for (const part of parts) {
+      const normalized = part.toUpperCase();
+      if (normalized === "LOW" || normalized === "L") {
+        system = "coc_low";
+      } else if (normalized === "ADV" || normalized === "ADVANTAGE") {
+        rollMode = "advantage";
+      } else if (normalized === "DIS" || normalized === "DISADVANTAGE") {
+        rollMode = "disadvantage";
+      } else {
+        const targetMatch = normalized.match(/^DC\s*(-?\d+)$/) || normalized.match(/^(-?\d+)$/);
+        if (targetMatch) target = integer(targetMatch[1], 0);
+      }
+    }
+
+    return {
+      notation,
+      label,
+      target,
+      system,
+      roll_mode: rollMode,
+    };
+  }
+
+  function formatAttempt(dice) {
+    return `[${dice.join("+")}]`;
+  }
+
+  function formatDiceResult(result) {
+    const attempts = result.attempts.map(formatAttempt);
+    const selectedIndex = result.selectedAttempt - 1;
+    const selected = attempts[selectedIndex];
+    const rollText = attempts.length === 1
+      ? selected
+      : `${attempts.join(" / ")} → ${selected}`;
+    const totalModifier = result.notationModifier + result.extraModifier;
+    const modifierText = totalModifier > 0 ? `+${totalModifier}` : totalModifier < 0 ? String(totalModifier) : "";
+    let outcome = "";
+
+    if (result.target !== null) {
+      const comparison = result.system === "coc_low"
+        ? `${result.total} ${result.success ? "<=" : ">"} ${result.target}`
+        : `${result.total} ${result.success ? ">=" : "<"} DC${result.target}`;
+      outcome = result.success
+        ? `${comparison} ✅ 성공!`
+        : `${comparison} ❌ 실패...`;
+    }
+
+    if (result.critical) outcome += " ✨ 크리티컬!";
+    if (result.fumble) outcome += " 💀 펌블!";
+    return `${result.notation} = ${rollText}${modifierText} = ${result.total}${outcome ? ` ${outcome}` : ""}`;
   }
 
   spindle.registerMacro({
@@ -271,6 +335,19 @@
     ],
     handler: function (ctx) {
       return macroArg(ctx, 0, "text").includes(macroArg(ctx, 1, "needle")) ? 1 : 0;
+    }
+  });
+
+  spindle.registerMacro({
+    name: "littleDevilLength",
+    category: MACRO_CATEGORY,
+    description: "Namespaced RisuAI-compatible string length used to avoid CharX macro-interceptor collisions.",
+    returnType: "integer",
+    args: [
+      { name: "text", required: false }
+    ],
+    handler: function (ctx) {
+      return macroArg(ctx, 0, "text").length;
     }
   });
 
@@ -318,55 +395,37 @@
     }
   });
 
-  spindle.registerTool({
-    name: TOOL_NAME,
-    display_name: "Little Devil TTRPG Check",
-    description: "Resolve a consequential TTRPG check. Use dnd_high for roll-high d20 checks and coc_low for roll-low percentile checks.",
-    council_eligible: false,
-    parameters: {
-      type: "object",
-      properties: {
-        system: {
-          type: "string",
-          enum: ["dnd_high", "coc_low"],
-          description: "dnd_high succeeds at or above the target. coc_low succeeds at or below it."
-        },
-        label: {
-          type: "string",
-          description: "Short in-fiction name of the skill, save, or ability being checked."
-        },
-        notation: {
-          type: "string",
-          description: "Dice notation such as 1d20+5 or 1d100. Defaults appropriately for the selected system."
-        },
-        target: {
-          type: "number",
-          description: "Optional difficulty class for dnd_high or skill/target percentage for coc_low. Omit for an unopposed roll such as damage."
-        },
-        modifier: {
-          type: "number",
-          description: "Additional integer modifier not already included in notation."
-        },
-        roll_mode: {
-          type: "string",
-          enum: ["normal", "advantage", "disadvantage"],
-          description: "Roll once, keep the favorable result, or keep the unfavorable result."
-        }
-      },
-      required: ["system", "label"]
-    }
-  });
-
-  spindle.on("TOOL_INVOCATION", async function (payload) {
-    if (!payload || payload.toolName !== TOOL_NAME) return;
-    const input = payload.args || payload.parameters || payload.arguments || payload.input || {};
+  spindle.onFrontendMessage(async function (payload, userId) {
+    if (!payload || payload.type !== ROLL_MESSAGE_TYPE) return;
+    const chatId = String(payload.chatId || "");
+    const messageId = String(payload.messageId || "");
+    const rollKey = String(payload.rollKey || "");
     try {
-      return JSON.stringify(resolveCheck(input));
-    } catch (error) {
-      return JSON.stringify({
-        tool: TOOL_NAME,
-        error: error instanceof Error ? error.message : String(error)
+      if (!chatId || !messageId || !rollKey) throw new Error("Missing chat, message, or roll identifier.");
+      const result = resolveCheck(parseDiceRequest(payload.content));
+      const formatted = formatDiceResult(result);
+      const appended = await spindle.chat.appendMessage(chatId, {
+        role: "user",
+        content: formatted,
+        metadata: {
+          source: ROLL_MESSAGE_TYPE,
+          roll_key: rollKey,
+          source_message_id: messageId,
+        },
       });
+      spindle.sendToFrontend({
+        type: ROLL_RESULT_TYPE,
+        rollKey,
+        status: "appended",
+        messageId: appended && appended.id,
+      }, userId);
+    } catch (error) {
+      spindle.sendToFrontend({
+        type: ROLL_RESULT_TYPE,
+        rollKey,
+        status: "error",
+        error: error instanceof Error ? error.message : String(error),
+      }, userId);
     }
   });
 })();
