@@ -30,4 +30,4 @@ The custom Risu-style long-term-memory wrapper is intentionally omitted. Lumiver
 
 BKSPC and the asset/image subsystem are intentionally not included.
 
-Preset 2.3.0 consolidates the repeated Helena history detectors, makes every regex replacement native-only, namespaces string-length checks, removes the redundant Risu memory wrapper, and restores the original clickable TTRPG flow.
+Preset 2.3.1 consolidates the repeated Helena history detectors, makes every regex replacement native-only, namespaces string-length checks, removes the redundant Risu memory wrapper, restores the original clickable TTRPG flow, and keeps GM dialogue in the selected response language.
