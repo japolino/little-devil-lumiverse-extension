@@ -1,8 +1,8 @@
 # Little Devil Preset Runtime
 
-Companion Spindle extension for the Lumiverse port of the Little Devil v15-9B [Gem3.1] preset.
+Companion Spindle extension for the Lumiverse port of the Little Devil v16 [Gem3.1] preset.
 
-This extension serves the whole preset, including the first- and second-category port. It registers:
+This extension serves the whole preset, including the first- and second-category port and the restored first-category jailbreak group. It registers:
 
 - `littleDevilCalc`, a compatibility macro for RisuAI arithmetic, comparisons, boolean operators, negation, and nested parentheses.
 - `littleDevilContains`, preserving RisuAI's literal case-sensitive substring test.
@@ -20,7 +20,7 @@ The assistant emits one `<DICE>notation:label:target[:LOW][:ADV|DIS]</DICE>` req
 
 ## Install
 
-Install this folder as a Lumiverse Spindle extension and grant the `chat_mutation` permission. Then import `little-devil-v15-9b-gem3.1-lumiverse.preset.json`. Function Calling is not required.
+Install this folder as a Lumiverse Spindle extension and grant the `chat_mutation` permission. Then import `little-devil-v16-gem3.1-lumiverse.preset.json`. Function Calling is not required.
 
 The extension is required for full parity because many toggles use RisuAI's expression evaluator. Without it, Lumiverse leaves the compatibility macros unresolved and cannot turn TTRPG requests into interactive rolls.
 
@@ -30,4 +30,4 @@ The custom Risu-style long-term-memory wrapper is intentionally omitted. Lumiver
 
 BKSPC and the asset/image subsystem are intentionally not included.
 
-Preset 2.3.1 consolidates the repeated Helena history detectors, makes every regex replacement native-only, namespaces string-length checks, removes the redundant Risu memory wrapper, restores the original clickable TTRPG flow, and keeps GM dialogue in the selected response language.
+Preset 3.0.0 imports the v16 source changes (rewritten saching instructions, removed Courtesy/derogatory sections from Guidelines, a show-don't-tell addition in Feedback, and a prompt-injection warning in the final response block), restores the first-category jailbreak group (`helenabreak`, `jailbreak`, `prefil`, `chatml`, `SFW`) together with its content blocks (Content Policy section, the ChatML chain, and the censorship-release prefill block), adds the 11 new v16 source-disabled regex scripts, keeps the consolidated Helena history scan, and keeps every regex replacement native-only.
