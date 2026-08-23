@@ -2510,9 +2510,9 @@
     ],
     "source": "imported",
     "coverUrl": null,
-    "createdAt": "2026-08-23T01:07:56.493Z",
+    "createdAt": "2026-08-23T01:46:46.412Z",
     "isDefault": false,
-    "updatedAt": "2026-08-23T01:07:56.493Z",
+    "updatedAt": "2026-08-23T01:46:46.412Z",
     "customBody": "",
     "extensions": {
       "regex_scripts": [
@@ -3325,7 +3325,7 @@
           "description": "Renders model reasoning enclosed in <Thoughts> tags as a collapsible details block.",
           "run_on_edit": false,
           "trim_strings": [],
-          "replace_string": "<details class=\"lumiverse-thoughts\"><summary>Thoughts</summary>\n$1\n</details>\n",
+          "replace_string": "<details class=\"lumiverse-thoughts\"><summary>Thoughts</summary>\n$1\n</details>\n\n",
           "substitute_macros": "none"
         },
         {
@@ -3587,6 +3587,35 @@
           "run_on_edit": false,
           "trim_strings": [],
           "replace_string": "<section style=\"margin:.8em 0;padding:.8em 1em;border-left:3px solid var(--lumiverse-prose-dialogue);border-radius:var(--lumiverse-radius-sm);background:var(--lumiverse-fill-subtle);color:var(--lumiverse-text);\"><strong style=\"display:block;margin-bottom:.45em;color:var(--lumiverse-prose-dialogue);letter-spacing:.05em;\">Knowledge</strong>$1</section>",
+          "substitute_macros": "none"
+        },
+        {
+          "name": "Timeline — Display Chip",
+          "flags": "gmu",
+          "scope": "global",
+          "folder": "Little Devil — Display",
+          "target": [
+            "display"
+          ],
+          "actions": [],
+          "disabled": false,
+          "metadata": {
+            "importedFrom": "Little Devil Lumiverse port",
+            "purpose": "timeline_chip"
+          },
+          "scope_id": null,
+          "max_depth": null,
+          "min_depth": null,
+          "placement": [
+            "ai_output"
+          ],
+          "script_id": "little_devil_timeline_chip_8802666dd5",
+          "find_regex": "^(?<prefix>\\s*(?:⏱️|🕓|🔮|⏱|🕐|🕑|🕒|🕔|🕕|🕖|🕗|🕘|🕙|🕚|🕛)?\\s*)\\[(?<date>\\d{4}-\\d{2}-\\d{2})\\s+\\((?<dow>[A-Za-z]{3}|[\\uAC00-\\uD7AF]{1,3}|[\\u4E00-\\u9FFF]{1,3}|Seg|Ter|Qua|Qui|Sex|Sáb|Dom)\\)\\s+(?<time>\\d{1,2}:\\d{2})\\s*(?<ampm>AM|PM|am|pm)?\\s*(?<tz>\\S+)?\\]\\s*$",
+          "sort_order": 10002,
+          "description": "Display-only timeline chip for standalone timeline lines. Disable via regex toggle to show raw text. Speech Formatting block toggle remains separate.",
+          "run_on_edit": false,
+          "trim_strings": [],
+          "replace_string": "<time class=\"timeline-chip\" data-timeline=\"1\" style=\"display:inline-flex;align-items:center;gap:.45em;margin:.35em 0 .6em;padding:.32em .68em;border-radius:var(--lumiverse-radius-sm, 999px);background:var(--lumiverse-primary-010, #e8eefb);border:1px solid var(--lumiverse-primary, #5b7bd5);color:var(--lumiverse-primary-text, #2a3a6b);font-size:.88em;font-weight:650;letter-spacing:.02em;line-height:1;white-space:nowrap;vertical-align:baseline;\" title=\"$<date> ($<dow>) $<time> $<ampm>\"><span aria-hidden=\"true\" style=\"font-size:1.05em;line-height:1;\">⏱️</span><span style=\"color:var(--lumiverse-primary-text, #2a3a6b);\">$<date></span><span style=\"color:var(--lumiverse-text-muted, #5a6a8a);font-weight:600;\">($<dow>)</span><span style=\"color:var(--lumiverse-primary-text, #2a3a6b);\">$<time> $<ampm></span></time>",
           "substitute_macros": "none"
         }
       ]
@@ -4567,7 +4596,7 @@
       "description": "Renders model reasoning enclosed in <Thoughts> tags as a collapsible details block.",
       "run_on_edit": false,
       "trim_strings": [],
-      "replace_string": "<details class=\"lumiverse-thoughts\"><summary>Thoughts</summary>\n$1\n</details>\n",
+      "replace_string": "<details class=\"lumiverse-thoughts\"><summary>Thoughts</summary>\n$1\n</details>\n\n",
       "substitute_macros": "none"
     },
     {
@@ -4829,6 +4858,35 @@
       "run_on_edit": false,
       "trim_strings": [],
       "replace_string": "<section style=\"margin:.8em 0;padding:.8em 1em;border-left:3px solid var(--lumiverse-prose-dialogue);border-radius:var(--lumiverse-radius-sm);background:var(--lumiverse-fill-subtle);color:var(--lumiverse-text);\"><strong style=\"display:block;margin-bottom:.45em;color:var(--lumiverse-prose-dialogue);letter-spacing:.05em;\">Knowledge</strong>$1</section>",
+      "substitute_macros": "none"
+    },
+    {
+      "name": "Timeline — Display Chip",
+      "flags": "gmu",
+      "scope": "global",
+      "folder": "Little Devil — Display",
+      "target": [
+        "display"
+      ],
+      "actions": [],
+      "disabled": false,
+      "metadata": {
+        "importedFrom": "Little Devil Lumiverse port",
+        "purpose": "timeline_chip"
+      },
+      "scope_id": null,
+      "max_depth": null,
+      "min_depth": null,
+      "placement": [
+        "ai_output"
+      ],
+      "script_id": "little_devil_timeline_chip_8802666dd5",
+      "find_regex": "^(?<prefix>\\s*(?:⏱️|🕓|🔮|⏱|🕐|🕑|🕒|🕔|🕕|🕖|🕗|🕘|🕙|🕚|🕛)?\\s*)\\[(?<date>\\d{4}-\\d{2}-\\d{2})\\s+\\((?<dow>[A-Za-z]{3}|[\\uAC00-\\uD7AF]{1,3}|[\\u4E00-\\u9FFF]{1,3}|Seg|Ter|Qua|Qui|Sex|Sáb|Dom)\\)\\s+(?<time>\\d{1,2}:\\d{2})\\s*(?<ampm>AM|PM|am|pm)?\\s*(?<tz>\\S+)?\\]\\s*$",
+      "sort_order": 10002,
+      "description": "Display-only timeline chip for standalone timeline lines. Disable via regex toggle to show raw text. Speech Formatting block toggle remains separate.",
+      "run_on_edit": false,
+      "trim_strings": [],
+      "replace_string": "<time class=\"timeline-chip\" data-timeline=\"1\" style=\"display:inline-flex;align-items:center;gap:.45em;margin:.35em 0 .6em;padding:.32em .68em;border-radius:var(--lumiverse-radius-sm, 999px);background:var(--lumiverse-primary-010, #e8eefb);border:1px solid var(--lumiverse-primary, #5b7bd5);color:var(--lumiverse-primary-text, #2a3a6b);font-size:.88em;font-weight:650;letter-spacing:.02em;line-height:1;white-space:nowrap;vertical-align:baseline;\" title=\"$<date> ($<dow>) $<time> $<ampm>\"><span aria-hidden=\"true\" style=\"font-size:1.05em;line-height:1;\">⏱️</span><span style=\"color:var(--lumiverse-primary-text, #2a3a6b);\">$<date></span><span style=\"color:var(--lumiverse-text-muted, #5a6a8a);font-weight:600;\">($<dow>)</span><span style=\"color:var(--lumiverse-primary-text, #2a3a6b);\">$<time> $<ampm></span></time>",
       "substitute_macros": "none"
     }
   ]
