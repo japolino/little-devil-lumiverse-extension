@@ -2,7 +2,7 @@
 
 Companion Spindle extension for the Lumiverse port of the Little Devil v16 [Gem3.1] preset.
 
-This extension serves the whole preset, including the first- and second-category port and the restored first-category jailbreak group. It registers:
+This extension serves the first- and second-category preset port with the `jailbreak` and `hitomiw` controls and their prompt branches removed. It registers:
 
 - `littleDevilCalc`, a compatibility macro for RisuAI arithmetic, comparisons, boolean operators, negation, and nested parentheses.
 - `littleDevilContains`, preserving RisuAI's literal case-sensitive substring test.
@@ -30,4 +30,4 @@ The custom Risu-style long-term-memory wrapper is intentionally omitted. Lumiver
 
 BKSPC and the asset/image subsystem are intentionally not included.
 
-Preset 3.0.0 imports the v16 source changes (rewritten saching instructions, removed Courtesy/derogatory sections from Guidelines, a show-don't-tell addition in Feedback, and a prompt-injection warning in the final response block), restores the first-category jailbreak group (`helenabreak`, `jailbreak`, `prefil`, `chatml`, `SFW`) together with its content blocks (Content Policy section, the ChatML chain, and the censorship-release prefill block), adds the 11 new v16 source-disabled regex scripts, keeps the consolidated Helena history scan, and keeps every regex replacement native-only.
+Preset 3.0.0 imports the v16 source changes (rewritten saching instructions, removed Courtesy/derogatory sections from Guidelines, a show-don't-tell addition in Feedback, and a prompt-injection warning in the final response block), retains the first-category controls `helenabreak`, `prefil`, `chatml`, and `SFW`, removes `jailbreak`, `hitomiw`, and their prompt branches, adds the 11 new v16 source-disabled regex scripts, keeps the consolidated Helena history scan, and keeps every regex replacement native-only.
