@@ -24,6 +24,14 @@ Install this folder as a Lumiverse Spindle extension and grant the `chat_mutatio
 
 The extension is required for full parity because many toggles use RisuAI's expression evaluator. Without it, Lumiverse leaves the compatibility macros unresolved and cannot turn TTRPG requests into interactive rolls.
 
+## Reasoning settings
+
+Structured Reasoning Mode selects internal consistency, story-planning, canon, or mature-scene review instructions. Extended Reasoning adds depth instructions. Neither control enables provider-native thinking or sets an API token budget. Enable native thinking and its supported budget in your model/provider settings. Minimum Reasoning Tokens is a prompt target only.
+
+The preset keeps model planning out of the response body in every response mode. If native thinking is unavailable, it asks for silent checks and a response without a visible reasoning section. Narrative reasoning retains the selected POV and custom character knowledge limits. Character inner thoughts, the optional checklist, and memory-tracking output remain separate features.
+
+Run `node tests/reasoning.cjs` for offline branch and scope checks. These tests use the extension's compatibility macros; they do not test provider requests or model compliance. To verify native thinking in your setup, generate a response with thinking enabled and confirm that reasoning is reported in the provider's native channel and that the response body has no model-planning section. Repeat with thinking disabled to check the fallback.
+
 The paired preset uses Lumiverse's native `unless` block plus namespaced boolean and length macros instead of the bare `if`, `and`, `or`, `not`, and `length` names. This keeps toggle branches and blank custom fields intact when a `.charx` card is running through LumiRealm's global Risu macro interceptor.
 
 The custom Risu-style long-term-memory wrapper is intentionally omitted. Lumiverse handles long-term-memory retrieval and Memory Cortex injection itself; retaining the source wrapper would duplicate native recall and assume incompatible Risu memory fields.
