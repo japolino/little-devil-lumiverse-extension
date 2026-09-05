@@ -66,12 +66,35 @@ for(let response_mode=0;response_mode<5;response_mode++)for(let writing_perspect
  povCases++;
 }
 let templateCases=0;
-for(let response_mode=0;response_mode<5;response_mode++)for(let response_language=0;response_language<4;response_language++)for(let volume_chapter=0;volume_chapter<2;volume_chapter++)for(let timestamps=0;timestamps<2;timestamps++)for(let timenow=0;timenow<2;timenow++){
- const text=block(after,template,{response_mode,response_language,volume_chapter,timestamps,timenow});
- assert.equal(/^## .+ \{Number\}: \{Title\}/m.test(text),response_mode===0&&volume_chapter===1);
- assert.equal(text.includes('Include a clock'),response_mode<2&&timestamps===1&&timenow===0);
- assert.equal(text.includes('At the start of every scene'),response_mode<2&&timestamps===1&&timenow===0);
+for(let response_mode=0;response_mode<5;response_mode++)for(let response_language=0;response_language<4;response_language++)for(let endover=0;endover<2;endover++)for(let timenow=0;timenow<2;timenow++){
+ const text=block(after,template,{response_mode,response_language,endover,timenow});
+ assert.equal(/^## .+ \{Number\}: \{Title\}/m.test(text),response_mode===0&&endover===1);
+ assert.equal(text.includes('Include a clock'),response_mode<2&&timenow===0);
+ assert.equal(text.includes('At the start of every scene'),response_mode<2&&timenow===0);
  assert(!text.includes('Chatindex'));
  templateCases++;
+}
+const definitions=after.preset.blocks.flatMap(b=>b.variables||[]);
+const serialized=JSON.stringify(after);
+for(const removed of ['volume_chapter','timestamps']){
+ assert(!definitions.some(v=>v.name===removed));
+ assert(!serialized.includes('{{var::'+removed+'}}'));
+ assert(!Object.values(after.preset.promptVariables).some(v=>Object.hasOwn(v,removed)));
+}
+assert.equal(definitions.filter(v=>v.name==='endover').length,1);
+assert.equal(definitions.filter(v=>v.name==='timenow').length,1);
+assert.equal(defaults(after).endover,0);
+assert.equal(defaults(after).timenow,0);
+const guidelines=after.preset.blocks.findIndex(b=>b.name==='# Guidelines');
+const feedback=after.preset.blocks.findIndex(b=>b.name==='# Feedback');
+for(let endover=0;endover<2;endover++)for(let story_speed=0;story_speed<5;story_speed++){
+ const v={endover,story_speed,response_mode:0};
+ const guide=block(after,guidelines,v),review=block(after,feedback,v);
+ assert.equal(guide.includes('Each volume consists of 10-15 chapters'),!!endover);
+ assert.equal(guide.includes('When the volume is fully developed'),!!endover);
+ assert.equal(review.includes('Volume Structure:'),!!endover);
+ assert.equal(review.includes('Volume End Format:'),!!endover);
+ assert.equal(guide.includes('Insert timestamps per scene'),true);
+ assert.equal(block(after,guidelines,{...v,timenow:1}).includes('Insert timestamps per scene'),false);
 }
 console.log(`PASS: balanced macro scopes; ${reasoningCases} reasoning, ${povCases} POV, ${templateCases} template combinations.`);

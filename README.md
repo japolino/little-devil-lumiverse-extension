@@ -24,7 +24,11 @@ Install this folder as a Lumiverse Spindle extension and grant the `chat_mutatio
 
 The extension is required for full parity because many toggles use RisuAI's expression evaluator. Without it, Lumiverse leaves the compatibility macros unresolved and cannot turn TTRPG requests into interactive rolls.
 
-## Reasoning settings
+## Preset controls
+
+Volume & Chapter Structure (`endover`) is disabled by default. Enabling it applies volume-based plot pacing and ending markers, plus volume/chapter headings and numbering in novel mode. The separate `volume_chapter` switch has been removed.
+
+Disable In-Story Scene Timestamps (`timenow`) is the sole scene-timestamp control. Leave it off to include timestamps; turn it on to omit them. The duplicate `timestamps` switch has been removed. After importing this update into an existing setup, check these retained controls because saved values may differ from the preset defaults.
 
 Structured Reasoning Mode selects internal consistency, story-planning, canon, or mature-scene review instructions. Extended Reasoning adds depth instructions. Neither control enables provider-native thinking or sets an API token budget. Enable native thinking and its supported budget in your model/provider settings. Minimum Reasoning Tokens is a prompt target only.
 
