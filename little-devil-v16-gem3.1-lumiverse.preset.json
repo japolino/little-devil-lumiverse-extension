@@ -2492,12 +2492,15 @@
         "characterTagTrigger": []
       }
     ],
-    "source": "imported",
+    "source": null,
     "coverUrl": null,
-    "createdAt": "2026-09-05T22:01:27.343Z",
+    "createdAt": 1788837801,
     "isDefault": false,
-    "updatedAt": "2026-09-05T22:01:27.343Z",
-    "customBody": "",
+    "updatedAt": 1788837801,
+    "customBody": {
+      "enabled": false,
+      "rawJson": "{}"
+    },
     "extensions": {
       "regex_scripts": [
         {
@@ -3607,7 +3610,7 @@
     "description": "First- and second-category port from RisuAI v16, retaining the first-category controls helenabreak, prefil, chatml, and SFW. Unsafe-content controls, BKSPC, and asset-output controls are intentionally excluded. Includes native Lumiverse variables, prompt blocks, regex behavior, and hooks for the paired Little Devil preset runtime.",
     "lumihubMeta": null,
     "cacheRevision": 7,
-    "modelProfiles": [],
+    "modelProfiles": {},
     "schemaVersion": 2,
     "lastProfileKey": null,
     "promptBehavior": {
