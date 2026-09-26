@@ -1,8 +1,8 @@
 # Little Devil Preset Runtime
 
-Companion Spindle extension for the Lumiverse port of the Little Devil v16 [Gem3.1] preset.
+Companion Spindle extension for the Lumiverse port of the Little Devil v16-6 [Gem3.1] preset.
 
-This extension serves the first- and second-category preset port with the `jailbreak` and `hitomiw` controls and their prompt branches removed. It registers:
+This extension serves all three source categories with the stage-1 `jailbreak` branch and both Hitomi controls removed. It registers:
 
 - `littleDevilCalc`, a compatibility macro for RisuAI arithmetic, comparisons, boolean operators, negation, and nested parentheses.
 - `littleDevilContains`, preserving RisuAI's literal case-sensitive substring test.
@@ -20,15 +20,17 @@ The assistant emits one `<DICE>notation:label:target[:LOW][:ADV|DIS]</DICE>` req
 
 ## Install
 
-Install this folder as a Lumiverse Spindle extension and grant the `chat_mutation` permission. Then import `little-devil-v16-gem3.1-lumiverse.preset.json`. Function Calling is not required.
+Install this folder as a Lumiverse Spindle extension and grant the `chat_mutation` permission. Then import `little-devil-v16-6-gem3.1-lumiverse.preset.json`. Function Calling is not required.
 
 The extension is required for full parity because many toggles use RisuAI's expression evaluator. Without it, Lumiverse leaves the compatibility macros unresolved and cannot turn TTRPG requests into interactive rolls.
 
 ## Preset controls
 
-Volume & Chapter Structure (`endover`) is disabled by default. Enabling it applies volume-based plot pacing and ending markers, plus volume/chapter headings and numbering in novel mode. The separate `volume_chapter` switch has been removed.
+Volume structure uses the source's `endover` switch. The port's separate `volume_chapter` switch has been removed.
 
-Disable In-Story Scene Timestamps (`timenow`) is the sole scene-timestamp control. Leave it off to include timestamps; turn it on to omit them. The duplicate `timestamps` switch has been removed. After importing this update into an existing setup, check these retained controls because saved values may differ from the preset defaults.
+Scene timestamps use the source's `timenow` switch. Leave it off to include timestamps; turn it on to omit them. The port's duplicate `timestamps` switch has been removed. Check both retained controls after import if you had saved values for the removed switches.
+
+The v16-6 source's third group is present. Its prompt-driven utilities, five genre selectors, and display heading toggle are wired into the preset. Nine switches appear in the source without a prompt or regex binding (`ban_cot_out`, `cot_box`, `nocomma`, `zerocomma`, `stopbracket`, `anitiating`, `ban_CSS`, `piece`, `PastMemori`). They are marked as source-only declarations in their descriptions.
 
 Structured Reasoning Mode selects internal consistency, story-planning, canon, or mature-scene review instructions. Extended Reasoning adds depth instructions. Neither control enables provider-native thinking or sets an API token budget. Enable native thinking and its supported budget in your model/provider settings. Minimum Reasoning Tokens is a prompt target only.
 
@@ -42,4 +44,4 @@ The custom Risu-style long-term-memory wrapper is intentionally omitted. Lumiver
 
 BKSPC and the asset/image subsystem are intentionally not included.
 
-Preset 3.0.0 imports the v16 source changes (rewritten saching instructions, removed Courtesy/derogatory sections from Guidelines, a show-don't-tell addition in Feedback, and a prompt-injection warning in the final response block), retains the first-category controls `helenabreak`, `prefil`, `chatml`, and `SFW`, removes `jailbreak`, `hitomiw`, and their prompt branches, adds the 11 new v16 source-disabled regex scripts, keeps the consolidated Helena history scan, and keeps every regex replacement native-only.
+Preset 3.1.0 imports v16-6 content, including Aneleh OOC mode, Kirene narration, the new writing and pace options, status-panel modes, population ratio fields, the intimate-dialogue control, five genre selectors, and eight new source-disabled regex scripts. The preset retains `helenabreak`, `prefil`, `chatml`, and `SFW`, excludes stage 1 and both Hitomi controls, keeps the consolidated Helena history scan, and uses native-only regex replacements.
